@@ -14,7 +14,7 @@ requires:
 
 provides:
   commands:
-    - name: speckit.tinyspec
+    - name: speckit.tinyspec.create
       file: commands/speckit.tinyspec.md
       description: "Generate a single lightweight spec file with context, plan, and tasks for small changes"
     - name: speckit.tinyspec.implement
