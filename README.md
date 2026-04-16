@@ -18,15 +18,17 @@ The TinySpec extension adds three commands for lightweight specification:
 
 | Command | Purpose | Modifies Files? |
 |---------|---------|-----------------|
-| `/speckit.tinyspec` | Generate a single lightweight spec file with context, plan, and tasks for small changes | Yes — creates one spec file |
+| `/speckit.tinyspec.create` | Generate a single lightweight spec file with context, plan, and tasks for small changes | Yes — creates one spec file |
 | `/speckit.tinyspec.implement` | Implement a small change directly from its tinyspec file | Yes — modifies source files, updates tinyspec |
 | `/speckit.tinyspec.classify` | Classify task complexity and recommend tinyspec or full SDD workflow | No — read-only |
 
 ## Installation
 
 ```bash
-specify extension add --from https://github.com/Quratulain-bilal/spec-kit-tinyspec/archive/refs/tags/v1.0.0.zip
+specify extension add tinyspec --from https://github.com/Quratulain-bilal/spec-kit-tinyspec/archive/refs/tags/v1.0.0.zip
 ```
+
+For Spec Kit 0.6.1 compatibility in this fork, the primary command is named `/speckit.tinyspec.create` because extension commands must follow the `speckit.{extension}.{command}` pattern.
 
 ## How It Works
 
@@ -34,7 +36,7 @@ specify extension add --from https://github.com/Quratulain-bilal/spec-kit-tinysp
 
 ```
 Full SDD (complex features):          TinySpec (small changes):
-  /speckit.specify  → spec.md           /speckit.tinyspec → one file
+  /speckit.specify  → spec.md           /speckit.tinyspec.create → one file
   /speckit.plan     → plan.md           /speckit.tinyspec.implement → done
   /speckit.tasks    → tasks.md
   /speckit.implement → code
@@ -100,7 +102,7 @@ The classify command acts as an intelligent router:
 
 | Complexity | Files | Tasks | Workflow |
 |-----------|-------|-------|----------|
-| **Small** | 1-5 | 1-8 | `/speckit.tinyspec` |
+| **Small** | 1-5 | 1-8 | `/speckit.tinyspec.create` |
 | **Medium** | 5-15 | 8-20 | `/speckit.specify` (full SDD) |
 | **Large** | 15+ | 20+ | `/speckit.clarify` → `/speckit.specify` |
 
@@ -112,7 +114,7 @@ Describe your task
        ▼
 /speckit.tinyspec.classify           ← Is this small or complex?
        │
-       ├── Small ──→ /speckit.tinyspec           ← One-file spec
+       ├── Small ──→ /speckit.tinyspec.create    ← One-file spec
        │                    │
        │                    ▼
        │             /speckit.tinyspec.implement  ← Build it
