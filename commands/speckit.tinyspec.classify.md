@@ -81,10 +81,35 @@ You **MUST** consider the user input before proceeding (if not empty). The user 
    → Use **`/speckit.specify`** — this task has enough complexity to benefit from the full SDD workflow.
    ```
 
+5. **Mandatory Decision Gate** (enforced only when this command runs as a `before_specify` hook with `optional: false`):
+
+   When **all** of the following are true, you MUST NOT continue automatically into the full SDD flow:
+   - This command was invoked as a `before_specify` hook (check `.specify/extensions.yml`).
+   - Its hook entry has `optional: false`.
+   - The classification result above is **🟢 Small (tinyspec)**.
+
+   In that case, pause and surface this **non-skippable** decision prompt to the user, then wait for their choice:
+
+   ```markdown
+   ⚠️ This change was classified as a **tinyspec**.
+
+   The tinyspec gate is active (`optional: false`), so you must choose how to proceed:
+
+   | Option | Path |
+   |--------|------|
+   | **Continue as tinyspec** | Generate a single lightweight tinyspec file (`/speckit.tinyspec`) and proceed with the tinyspec implement path. |
+   | **Continue with full SDD** | Proceed with the complete spec → plan → tasks → implement workflow (`/speckit.specify`). |
+   ```
+
+   Follow exactly the path the user selects. Do not default to full SDD when the classification is tinyspec — the choice is the user's.
+
+   When the hook entry is `optional: true`, skip this gate: the classification is a non-blocking recommendation only.
+
 ## Rules
 
 - **Read-only** — this command never modifies any files
 - **Default to tinyspec** — when in doubt between small and medium, recommend tinyspec (users can always upgrade)
 - **Explain the reasoning** — always tell the user why you classified the task as small/medium/large
-- **No blocking** — this is a recommendation, not a gate. Users can choose either workflow regardless
+- **No blocking when `optional: true`** — as a non-mandatory hook (or a standalone invocation) this is a recommendation, not a gate; users can choose either workflow regardless
+- **Enforced gate when `optional: false`** — when run as a `before_specify` hook marked `optional: false` and the result is tinyspec, the Mandatory Decision Gate applies: surface the non-skippable prompt and follow the user's chosen path instead of defaulting to full SDD
 - **Context-aware** — consider the project's codebase size and architecture when estimating scope
