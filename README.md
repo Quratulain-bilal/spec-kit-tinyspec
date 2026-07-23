@@ -154,7 +154,7 @@ The extension registers an optional hook:
 
 ## Requirements
 
-- Spec Kit >= 0.4.0
+- Spec Kit >= 0.4.0, < 1.0.0
 - Git >= 2.0.0
 
 ## Related

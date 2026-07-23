@@ -1,0 +1,17 @@
+# Exclude dev-only files from the installed extension.
+# .gitignore-compatible patterns (pathspec).
+
+# Agent/tool workspaces
+.claude/
+.wibey/
+.code-review-graph/
+.vscode/
+
+# Spec-kit project state (belongs to this dev repo, not to consumers)
+.specify/
+specs/
+
+# Repo-local development artifacts
+.git/
+.gitignore
+AGENTS.md
