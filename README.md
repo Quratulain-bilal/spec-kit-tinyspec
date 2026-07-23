@@ -151,10 +151,11 @@ The extension registers an optional hook:
 - **Scope guard** — warns if task grows beyond 5 files or 10 tasks and suggests upgrading to full SDD
 - **Non-blocking classifier** — classify is a recommendation, not a gate. Users always choose the workflow
 - **Stored in specs/tiny/** — keeps tinyspecs separate from full specs for clean project structure
+- **Literal command references** — command files use literal `/speckit.*` references rather than the guide's `__SPECKIT_COMMAND_*__` tokens, because token resolution does not run in skills mode (which this extension targets), so a raw token would surface to the user. Revisit if spec-kit adds skills-mode token resolution, or if distributing to non-Claude command-file agents becomes a goal.
 
 ## Requirements
 
-- Spec Kit >= 0.4.0
+- Spec Kit >= 0.4.0, < 1.0.0
 - Git >= 2.0.0
 
 ## Related

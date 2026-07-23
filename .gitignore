@@ -1,0 +1,14 @@
+# Machine-local agent/tool workspaces
+.claude/
+.wibey/
+.vscode/
+.code-review-graph/
+
+# Spec-kit machine-local state (regenerated on install/registration)
+.specify/extensions/.cache/
+.specify/extensions/.registry
+.specify/feature.json
+
+# Local config overrides (never committed, per extension guide)
+*.local.yml
+**/*.local.yml
