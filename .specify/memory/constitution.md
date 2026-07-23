@@ -17,6 +17,7 @@ This project has no compiled source code. Every deliverable is a Markdown prompt
 - Command naming follows `speckit.{extension}.{subcommand}` — e.g., `speckit.tinyspec.classify`
 - Each command file: YAML frontmatter (`description`) + `# Title` + structured sections
 - **80-line output limit**: If a *generated tinyspec file* (`specs/tiny/*.md`) grows beyond 80 lines, the task is too complex for tinyspec — route to full SDD instead
+- **Command references stay literal**: cross-command references in command files use literal `/speckit.*`, not `__SPECKIT_COMMAND_*__` tokens, because token resolution does not run in skills mode (which this extension targets). See the README "Design Decisions" section; revisit only if spec-kit adds skills-mode token resolution
 
 ### III. Simplicity and Scope Guard (NON-NEGOTIABLE)
 
