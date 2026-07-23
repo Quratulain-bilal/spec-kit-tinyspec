@@ -1,0 +1,39 @@
+schema_version: "1.0"
+
+extension:
+  id: tinyspec
+  name: "TinySpec"
+  version: "1.0.0"
+  description: "Lightweight single-file workflow for small tasks — skip the heavy multi-step SDD process"
+  author: "Quratulain-bilal"
+  repository: "https://github.com/Quratulain-bilal/spec-kit-tinyspec"
+  license: "MIT"
+
+requires:
+  speckit_version: ">=0.4.0"
+
+provides:
+  commands:
+    - name: speckit.tinyspec
+      file: commands/speckit.tinyspec.md
+      description: "Generate a single lightweight spec file with context, plan, and tasks for small changes"
+    - name: speckit.tinyspec.implement
+      file: commands/speckit.tinyspec.implement.md
+      description: "Implement a small change directly from its tinyspec file"
+    - name: speckit.tinyspec.classify
+      file: commands/speckit.tinyspec.classify.md
+      description: "Classify task complexity and recommend tinyspec or full SDD workflow"
+
+hooks:
+  before_specify:
+    command: speckit.tinyspec.classify
+    optional: true
+    prompt: "Check if this task is small enough for the lightweight tinyspec workflow?"
+    description: "Auto-classify task complexity before starting the full SDD workflow"
+
+tags:
+  - "lightweight"
+  - "small-tasks"
+  - "workflow"
+  - "productivity"
+  - "efficiency"
