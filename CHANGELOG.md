@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Add `/speckit.tinyspec.clarify` command: a lightweight clarify step that asks at most 3 targeted questions and edits the tinyspec in place (#4)
+
 ## 1.0.0 (2026-04-10)
 
 - Initial release

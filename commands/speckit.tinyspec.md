@@ -93,6 +93,7 @@ You **MUST** consider the user input before proceeding (if not empty). The user 
 
    ## Next Steps
    - Review the tinyspec at `specs/tiny/{feature-name}.md`
+   - Optionally run `/speckit.tinyspec.clarify` to resolve open questions
    - Run `/speckit.tinyspec.implement` to build it
    - Or implement manually — the spec is your checklist
    ```
