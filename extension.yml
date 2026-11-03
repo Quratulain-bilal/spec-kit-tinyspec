@@ -17,6 +17,9 @@ provides:
     - name: speckit.tinyspec
       file: commands/speckit.tinyspec.md
       description: "Generate a single lightweight spec file with context, plan, and tasks for small changes"
+    - name: speckit.tinyspec.clarify
+      file: commands/speckit.tinyspec.clarify.md
+      description: "Discuss and resolve ambiguities in a tinyspec with a few targeted questions, editing it in place"
     - name: speckit.tinyspec.implement
       file: commands/speckit.tinyspec.implement.md
       description: "Implement a small change directly from its tinyspec file"

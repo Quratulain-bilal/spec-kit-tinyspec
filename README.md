@@ -14,11 +14,12 @@ Spec Kit's standard workflow (specify → plan → tasks → implement) is power
 
 ## Solution
 
-The TinySpec extension adds three commands for lightweight specification:
+The TinySpec extension adds four commands for lightweight specification:
 
 | Command | Purpose | Modifies Files? |
 |---------|---------|-----------------|
 | `/speckit.tinyspec` | Generate a single lightweight spec file with context, plan, and tasks for small changes | Yes — creates one spec file |
+| `/speckit.tinyspec.clarify` | Discuss and resolve ambiguities in a tinyspec with a few targeted questions | Yes — edits the tinyspec only |
 | `/speckit.tinyspec.implement` | Implement a small change directly from its tinyspec file | Yes — modifies source files, updates tinyspec |
 | `/speckit.tinyspec.classify` | Classify task complexity and recommend tinyspec or full SDD workflow | No — read-only |
 
@@ -35,11 +36,11 @@ specify extension add --from https://github.com/Quratulain-bilal/spec-kit-tinysp
 ```
 Full SDD (complex features):          TinySpec (small changes):
   /speckit.specify  → spec.md           /speckit.tinyspec → one file
-  /speckit.plan     → plan.md           /speckit.tinyspec.implement → done
-  /speckit.tasks    → tasks.md
+  /speckit.plan     → plan.md           /speckit.tinyspec.clarify → (optional)
+  /speckit.tasks    → tasks.md          /speckit.tinyspec.implement → done
   /speckit.implement → code
 
-  4 commands, 3+ files, 100+ lines      2 commands, 1 file, <80 lines
+  4 commands, 3+ files, 100+ lines      2-3 commands, 1 file, <80 lines
 ```
 
 ### The TinySpec Format
@@ -94,6 +95,21 @@ auth hook and redirects to the login page.
 - [ ] No lint errors
 ```
 
+### Lightweight Clarification
+
+`/speckit.tinyspec.clarify` reviews a tinyspec with you before you implement it, without the overhead of the full `/speckit.clarify`:
+
+- Reads the files in the Context table, then looks for gaps that would change the code or tests: untestable requirements, missing error or edge-case behavior, requirements without tasks, files that don't exist
+- Asks **at most 3 questions**, one at a time, each with a recommended answer and a one-line reason. Reply `yes` to accept, `skip`, or `done` to stop early
+- Folds every answer straight into the existing sections, so there is no Q&A log, no extra section and no new file
+- Leaves source code and the `draft` status untouched, and recommends full SDD if the answers push the task past tinyspec's scope
+- If nothing important is unclear, it says so and points you to `/speckit.tinyspec.implement`
+
+```bash
+/speckit.tinyspec.clarify logout-button
+/speckit.tinyspec.clarify logout-button — focus on error handling
+```
+
 ### Complexity Classification
 
 The classify command acts as an intelligent router:
@@ -113,6 +129,9 @@ Describe your task
 /speckit.tinyspec.classify           ← Is this small or complex?
        │
        ├── Small ──→ /speckit.tinyspec           ← One-file spec
+       │                    │
+       │                    ▼
+       │             /speckit.tinyspec.clarify    ← Optional: resolve open questions
        │                    │
        │                    ▼
        │             /speckit.tinyspec.implement  ← Build it
@@ -150,6 +169,7 @@ The extension registers an optional hook:
 - **Concrete file references** — always lists actual files to modify, not abstract descriptions
 - **Scope guard** — warns if task grows beyond 5 files or 10 tasks and suggests upgrading to full SDD
 - **Non-blocking classifier** — classify is a recommendation, not a gate. Users always choose the workflow
+- **Quiet clarification** — clarify asks at most 3 high-impact questions and edits the spec in place instead of appending a log
 - **Stored in specs/tiny/** — keeps tinyspecs separate from full specs for clean project structure
 
 ## Requirements
@@ -160,6 +180,7 @@ The extension registers an optional hook:
 ## Related
 
 - Issue [#1174](https://github.com/github/spec-kit/issues/1174) — speckit.tinySpec: a lightweight workflow for small tasks (22+ reactions)
+- Issue [#4](https://github.com/Quratulain-bilal/spec-kit-tinyspec/issues/4) — request for a lightweight `/speckit-tinyspec-clarify`
 
 ## License
 
